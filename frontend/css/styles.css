@@ -1,0 +1,55 @@
+/* ========= THEME ========= */
+:root{
+  --brand: #22c55e;
+  --brand-dark:#169c49;
+  --ink:#1f2937;
+  --muted:#6b7280;
+  --surface:#ffffff;
+  --surface-2:#f8fafc;
+  --border:#e5e7eb;
+}
+
+body{ color:var(--ink); }
+
+/* Topbar */
+#topbar{
+  background: linear-gradient(90deg, var(--brand-dark), var(--brand));
+  color:#fff;
+}
+#topbar .navbar-brand{ color:#fff; }
+#topbar .brand-dot{
+  width:10px;height:10px;border-radius:50%;
+  display:inline-block;background:#fff; box-shadow:0 0 0 2px rgba(255,255,255,.3);
+}
+
+/* Cards */
+.card-elev{ border:1px solid var(--border); border-radius:14px; }
+.subtle-elev{ border:1px solid var(--border); border-radius:12px; }
+.card-elev, .subtle-elev{ background:var(--surface); box-shadow: 0 6px 20px rgba(2, 6, 23, .05); }
+.table-section{ background: var(--surface-2); }
+
+/* Sticky sidebar */
+.sticky-col{ position: sticky; top: 12px; }
+
+/* Tables */
+table.table td, table.table th{ vertical-align: middle; }
+table.table tbody tr:hover{ background: #fafafa; }
+
+/* Buttons & badges */
+.btn-primary{ background: var(--brand); border-color: var(--brand); }
+.btn-primary:hover{ background: var(--brand-dark); border-color: var(--brand-dark); }
+.badge.text-bg-info{ background: #0ea5e9 !important; }
+.badge.bg-secondary{ background:#e5e7eb !important; color:#111827 !important; }
+
+/* Minor tweaks */
+.form-label{ font-weight: 600; }
+.fs-5{ font-size:1.125rem; }
+
+/* Cards in pedidos recientes */
+#lista-pedidos .card{ border-radius:12px; border:1px solid var(--border); }
+
+/* Reduce spacing on small screens for dense view */
+@media (max-width: 576px){
+  .table { font-size: .92rem; }
+  .btn { padding:.375rem .6rem; }
+}

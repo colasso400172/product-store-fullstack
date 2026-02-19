@@ -1,0 +1,32 @@
+# === DEPENDENCIAS ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# === BASE DE DATOS LOCAL ===
+# (Cada alumno genera su propia BD al correr el script de inicialización)
+backend/data/*.sqlite
+backend/data/*.db
+backend/data/*.sqlite3
+
+# === ARCHIVOS TEMPORALES O DE CONFIGURACIÓN ===
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+.env
+
+# === BUILD / DIST ===
+dist/
+build/
+tmp/
+
+# === IDE / EDITORES ===
+.vscode/
+.idea/
+
+# === SISTEMA OPERATIVO ===
+desktop.ini

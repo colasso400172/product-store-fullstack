@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <title>DDS Parcial - Tienda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap 5 via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body class="bg-body">
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg shadow-sm sticky-top" id="topbar">
+    <div class="container-fluid">
+      <span class="navbar-brand fw-bold d-flex align-items-center gap-2">
+        <span class="brand-dot"></span> Tienda • Parcial DDS
+      </span>
+      <div class="d-none d-md-block small text-muted">v1.0</div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container-xxl py-3">
+    <div class="row g-3">
+      <!-- Productos -->
+      <!-- Es donde se cargan los productos desde getProductos() y se muestran con renderProductos().  -->
+      <section class="col-lg-8 col-xl-9">
+        <div class="card card-elev h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <h2 class="h4 mb-0">Productos</h2>
+              <span class="small text-muted">Catálogo</span>
+            </div>
+
+            <div class="input-group my-2">
+              <input id="search" type="search" class="form-control" placeholder="Buscar producto...">
+              <button id="btn-search" class="btn btn-outline-primary">Buscar</button>
+            </div>
+
+            <div class="table-responsive">
+              <table id="tabla-productos" class="table table-hover table-borderless align-middle table-sm">
+                <thead class="table-section">
+                  <tr><th>#</th><th>Nombre</th><th class="text-end">Precio</th><th class="text-center">Stock</th><th class="text-end pe-3"></th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div id="paginacion" class="d-flex gap-2 justify-content-end mt-2"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Carrito (sticky) -->
+      <aside class="col-lg-4 col-xl-3">
+        <div class="card card-elev sticky-col">
+          <div class="card-body">
+            <h2 class="h5 mb-2">Carrito</h2>
+
+            <div class="table-responsive">
+              <table id="tabla-carrito" class="table table-sm align-middle">
+                <thead class="table-section">
+                  <tr><th>Producto</th><th style="width:120px;" class="text-center">Cant.</th><th class="text-end">Subtotal</th><th></th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center py-2 border-top">
+              <span class="fw-semibold">Total</span>
+              <span class="fs-5 fw-bold text-primary">$ <span id="total">0.00</span></span>
+            </div>
+
+            <div class="mt-2">
+              <label class="form-label" for="cliente">Cliente</label>
+              <select id="cliente" class="form-select"></select>
+            </div>
+
+            <button id="btn-confirmar" class="btn btn-primary mt-3 w-100 btn-lg">Confirmar pedido</button>
+            <div id="msg" class="mt-2 small"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Pedidos recientes -->
+      <section class="col-12">
+        <div class="card card-elev">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <h2 class="h5 mb-0">Pedidos recientes</h2>
+              <span class="small text-muted">Últimos movimientos</span>
+            </div>
+            <div id="lista-pedidos" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Administración -->
+      <section class="col-12">
+        <div class="card card-elev">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <h2 class="h5 mb-3">Administración</h2>
+            </div>
+            <div class="row g-3">
+              <!-- Clientes -->
+              <div class="col-xl-4">
+                <div class="card h-100 subtle-elev">
+                  <div class="card-body">
+                    <h3 class="h6 mb-2">Clientes</h3>
+                    <form id="cliente-form" class="row g-2">
+                      <input type="hidden" id="cliente-id" />
+                      <div class="col-12">
+                        <label class="form-label">Nombre</label>
+                        <input id="cliente-nombre" class="form-control" required />
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label">Email</label>
+                        <input id="cliente-email" type="email" class="form-control" required />
+                      </div>
+                      <div class="col-12 d-flex gap-2 justify-content-end">
+                        <button type="submit" id="cliente-guardar" class="btn btn-primary btn-sm">Guardar</button>
+                        <button type="button" id="cliente-cancelar" class="btn btn-outline-secondary btn-sm">Cancelar</button>
+                      </div>
+                    </form>
+                    <div class="table-responsive mt-2">
+                      <table id="tabla-clientes" class="table table-sm align-middle">
+                        <thead class="table-section"><tr><th>#</th><th>Nombre</th><th>Email</th><th class="text-end pe-3"></th></tr></thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                    <div id="msg-clientes" class="small"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Productos -->
+              <div class="col-xl-4">
+                <div class="card h-100 subtle-elev">
+                  <div class="card-body">
+                    <h3 class="h6 mb-2">Productos</h3>
+                    <form id="producto-form" class="row g-2">
+                      <input type="hidden" id="producto-id" />
+                      <div class="col-12">
+                        <label class="form-label">Nombre</label>
+                        <input id="producto-nombre" class="form-control" required />
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">Precio</label>
+                        <input id="producto-precio" type="number" min="0" step="0.01" class="form-control" required />
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">Stock</label>
+                        <input id="producto-stock" type="number" min="0" step="1" class="form-control" required />
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label">Estado</label>
+                        <select id="producto-estado" class="form-select">
+                          <option value="DISPONIBLE">DISPONIBLE</option>
+                          <option value="NO_DISPONIBLE">NO_DISPONIBLE</option>
+                        </select>
+                      </div>
+                      <div class="col-12 d-flex gap-2 justify-content-end">
+                        <button type="submit" id="producto-guardar" class="btn btn-primary btn-sm">Guardar</button>
+                        <button type="button" id="producto-cancelar" class="btn btn-outline-secondary btn-sm">Cancelar</button>
+                      </div>
+                    </form>
+                    <div class="table-responsive mt-2">
+                      <table id="tabla-admin-productos" class="table table-sm align-middle">
+                        <thead class="table-section"><tr><th>#</th><th>Nombre</th><th class="text-end">Precio</th><th class="text-center">Stock</th><th>Estado</th><th class="text-end pe-3"></th></tr></thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                    <div id="msg-productos" class="small"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pedidos -->
+              <div class="col-xl-4">
+                <div class="card h-100 subtle-elev">
+                  <div class="card-body">
+                    <h3 class="h6 mb-2">Pedidos</h3>
+                    <div class="table-responsive">
+                      <table id="tabla-admin-pedidos" class="table table-sm align-middle">
+                        <thead class="table-section">
+                          <tr><th>#</th><th>Cliente</th><th>Fecha</th><th class="text-end">Total</th><th>Estado</th><th class="text-end pe-3"></th></tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                    <div id="msg-pedidos" class="small"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Modal editar pedido (ítems) -->
+  <div class="modal fade" id="modalPedido" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">Editar pedido</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body pt-0">
+          <div class="row g-2 mb-2">
+            <div class="col-md-6">
+              <label class="form-label">Cliente</label>
+              <select id="pedido-edit-cliente" class="form-select"></select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Agregar producto</label>
+              <div class="input-group">
+                <select id="pedido-edit-prod" class="form-select"></select>
+                <input id="pedido-edit-cant" type="number" min="1" step="1" class="form-control" value="1">
+                <button id="pedido-edit-add" class="btn btn-outline-primary" type="button">Agregar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-sm align-middle" id="pedido-edit-tabla">
+              <thead class="table-section"><tr><th>Producto</th><th class="text-center" style="width:140px;">Cantidad</th><th class="text-end">Precio</th><th class="text-end">Subtotal</th><th></th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="text-end fw-bold fs-5">Total: $ <span id="pedido-edit-total">0.00</span></div>
+          <div id="pedido-edit-msg" class="small mt-2"></div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button id="pedido-edit-guardar" class="btn btn-primary">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
